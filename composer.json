@@ -1,0 +1,25 @@
+{
+    "name": "ra/request-validator-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "alain",
+            "email": "developer2.reliefapps@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "keywords": [
+        "ReliefApps RA RequestValidatorBundle"
+    ],
+    "require" : {
+        "php" : ">=7.0",
+        "symfony/framework-bundle" : ">=2.5.6"
+    },
+    "autoload" : {
+        "psr-4" : {
+            "RA\\RequestValidatorBundle\\" : ""
+        }
+    },
+    "target-dir" : "RA/RequestValidatorBundle"
+}
