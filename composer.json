@@ -14,6 +14,5 @@
         "psr-4" : {
             "RA\\RequestValidatorBundle\\" : ""
         }
-    },
-    "target-dir" : "RA/RequestValidatorBundle"
+    }
 }

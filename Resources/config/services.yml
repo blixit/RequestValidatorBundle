@@ -1,4 +1,4 @@
 services:
-#    ra_request_validator.example:
-#        class: RA\RequestValidatorBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    request_validator:
+        class: RA\RequestValidatorBundle\RequestValidator\RequestValidator
+        arguments: ["@request_stack","@validator"]

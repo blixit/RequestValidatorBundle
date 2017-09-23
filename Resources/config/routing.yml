@@ -1,0 +1,4 @@
+
+request_validator:
+    resource: "@RARequestValidatorBundle/Controller/DefaultController.php"
+    type:     annotation
