@@ -1,5 +1,5 @@
 {
-    "name": "ra/symfony-request-validator-bundle",
+    "name": "relief_application/symfony-request-validator-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "minimum-stability": "dev",
