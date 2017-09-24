@@ -11,6 +11,7 @@ use RA\RequestValidatorBundle\Annotations\ValidateQueryAnnotation;
 use RA\RequestValidatorBundle\Annotations\ValidateQuery;
 use RA\RequestValidatorBundle\Annotations\ValidateRequest;
 use RA\RequestValidatorBundle\Annotations\ValidateAny;
+use RA\RequestValidatorBundle\RequestValidator\ValidationException as RequestValidatorValidationException;
 
 /**
 * AnnotationDriver
@@ -60,7 +61,7 @@ class AnnotationDriver
                 if($annotation instanceOf ValidateAny){
                     $this->validator->validateAny($annotation->configuration,$annotation->constraintsClass);
                 }
-            } catch (\Exception $e) {
+            } catch (RequestValidatorValidationException $e) {
                 $event->setController(function() use ($e) {
                     return new JsonResponse($e->getErrors(), $e->getCode());
                 });
