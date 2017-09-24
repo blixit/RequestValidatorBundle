@@ -2,3 +2,8 @@ services:
     request_validator:
         class: RA\RequestValidatorBundle\RequestValidator\RequestValidator
         arguments: ["@request_stack","@validator"]
+
+    request_validator.annotation_driver:
+        class:  RA\RequestValidatorBundle\Annotations\Driver\AnnotationDriver
+        tags: [{name: kernel.event_listener, event: kernel.controller, method: onKernelController}]          #Point event
+        arguments: ["@annotation_reader", "@request_validator"]
