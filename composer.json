@@ -1,5 +1,5 @@
 {
-    "name": "relief_applications/symfony-request-validator-bundle",
+    "name": "blixit/symfony-request-validator-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "minimum-stability": "dev",
