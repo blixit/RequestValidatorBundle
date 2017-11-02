@@ -9,6 +9,7 @@ use Symfony\Component\Validator\Constraints\Collection as ConstraintsCollection;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use RA\RequestValidatorBundle\RequestValidator\Constraints as RequestValidatorConstraints;
+use RA\RequestValidatorBundle\RequestValidator\ValidatedRequest;
 use RA\RequestValidatorBundle\RequestValidator\ValidationException as RequestValidatorValidationException;
 use RA\RequestValidatorBundle\RequestValidator\ConstraintsInterface as RequestValidatorConstraintsInterface;
 
@@ -18,6 +19,10 @@ use RA\RequestValidatorBundle\RequestValidator\ConstraintsInterface as RequestVa
  */
 class RequestValidator
 {
+    const Query     = 'q';
+    const Request   = 'r';
+    const Any       = 'a';
+
     /**
      * @var ValidatorInterface $validator
      */
@@ -63,14 +68,14 @@ class RequestValidator
 
         $queryFields    = $this->request->query->all();
         $this->validate($configuration, $constraintClassName, $queryFields, RequestValidatorConstraints::QUERY);
-
+        return $queryFields;
     }
 
     public function validateRequest(string $configuration, string $constraintClassName = RequestValidatorConstraints::class){
 
         $requestFields  = $this->request->request->all();
         $this->validate($configuration, $constraintClassName, $requestFields, RequestValidatorConstraints::REQUEST);
-
+        return $requestFields;
     }
 
     public function validateAny(string $configuration, string $constraintClassName = RequestValidatorConstraints::class){
@@ -80,7 +85,18 @@ class RequestValidator
         $fields = array_merge($queryFields, $requestFields);
 
         $this->validate($configuration, $constraintClassName, $fields, RequestValidatorConstraints::ANY);
+        return $fields;
+    }
 
+    public function getValidatedRequest(string $validationKind, string $configuration, string $constraintClassName = RequestValidatorConstraints::class)
+    {
+        switch($validationKind){
+            case RequestValidator::Query    : $fields = $this->validateQuery($configuration, $constraintClassName); break;
+            case RequestValidator::Request  : $fields = $this->validateRequest($configuration, $constraintClassName); break;
+            default                         : $fields = $this->validateAny($configuration, $constraintClassName); break;
+        }
+
+        return new ValidatedRequest($fields);
     }
 
 

@@ -185,6 +185,7 @@ class TopicController extends Controller
     */
     public function getAllAction(Request $request){
         try {
+            $validator = $this->get('request_validator');
             $this->validator->validateQuery('topics',TopicsConstraints::class);
         } catch (RequestValidatorValidationException $e) {
             return new JsonResponse($e->getErrors(), $e->getCode());
@@ -199,6 +200,7 @@ class TopicController extends Controller
     */
     public function createAction(Request $request){
         try {
+            $validator = $this->get('request_validator');
             $this->validator->validateRequest('topics',TopicsConstraints::class);
         } catch (RequestValidatorValidationException $e) {
             return new JsonResponse($e->getErrors(), $e->getCode());
@@ -214,7 +216,7 @@ class TopicController extends Controller
 
 ##### 4. Using ValidateAny
 
-This method check both, URI and posted parameters. When using ValidateAny, the configuration defined into the constraints class can only contain a constraints collection. Here we use **topics2**. ValidateAny can also be used as a function in the controller body.
+This method check both, URI and posted parameters. When using ValidateAny, the configuration defined into the constraints class can only contain a constraints collection. Here we use **topics2**. ValidateAny can also be used as a function in the controller body. **For now, ValidateAny will merge request fields and query fields if they have the same name.** 
 ```php
 <?php
 
