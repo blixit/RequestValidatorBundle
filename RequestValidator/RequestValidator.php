@@ -91,12 +91,16 @@ class RequestValidator
     public function getValidatedRequest(string $validationKind, string $configuration, string $constraintClassName = RequestValidatorConstraints::class)
     {
         switch($validationKind){
-            case RequestValidator::Query    : $fields = $this->validateQuery($configuration, $constraintClassName); break;
-            case RequestValidator::Request  : $fields = $this->validateRequest($configuration, $constraintClassName); break;
-            default                         : $fields = $this->validateAny($configuration, $constraintClassName); break;
+            case RequestValidator::Query    : $type = 'query';   $fields = $this->validateQuery($configuration, $constraintClassName); break;
+            case RequestValidator::Request  : $type = 'request'; $fields = $this->validateRequest($configuration, $constraintClassName); break;
+            default                         : $type = 'any';     $fields = $this->validateAny($configuration, $constraintClassName); break;
         }
 
-        return new ValidatedRequest($fields);
+        $constraintClass= (new \ReflectionClass($constraintClassName))->newInstance();
+        $constraints    = $constraintClass->getConfiguration($configuration, $type);
+        $allowedFields = array_keys($constraints->fields);
+
+        return new ValidatedRequest($allowedFields, $fields);
     }
 
 

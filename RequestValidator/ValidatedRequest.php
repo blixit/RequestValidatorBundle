@@ -15,10 +15,12 @@ class ValidatedRequest
     const SETTER = 's';
 
     private $allowedFields = [];
+    private $fields = [];
 
-    function __construct(array $fields)
+    function __construct(array $allowedFields, array $fields)
     {
-        $this->allowedFields = $fields;
+        $this->allowedFields = $allowedFields;
+        $this->fields = $fields;
     }
 
     public function __call($name, $arguments = null)
@@ -33,8 +35,6 @@ class ValidatedRequest
             $field = lcfirst(preg_replace($setRE, "", $name ));
             return $this->resolveField($field, self::SETTER, $arguments);
         }
-
-
     }
 
     private function resolveField(string $field, string $methodType, $arguments){
@@ -44,7 +44,7 @@ class ValidatedRequest
         }
 
         if($methodType == self::GETTER){
-            return $this->allowedFields[$field];
+            return isset($this->allowedFields[$field]) ? $this->allowedFields[$field] : null;
         }
         elseif($methodType == self::SETTER){
             $this->allowedFields[$field] = $arguments[0];
