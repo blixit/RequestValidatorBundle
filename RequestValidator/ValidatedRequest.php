@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * ValidatedRequest
+ *
+ * Provide getter/setter to each field
  */
 class ValidatedRequest
 {
@@ -38,7 +40,7 @@ class ValidatedRequest
     private function resolveField(string $field, string $methodType, $arguments){
 
         if( ! in_array($field, array_keys($this->allowedFields))){
-            throw new \Exception(sprintf("Unknown function %s.", $name), 1);
+            throw new \Exception(sprintf("The field %s is not allowed.", $field), 1);
         }
 
         if($methodType == self::GETTER){
