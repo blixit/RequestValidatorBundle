@@ -44,10 +44,10 @@ class ValidatedRequest
         }
 
         if($methodType == self::GETTER){
-            return isset($this->allowedFields[$field]) ? $this->allowedFields[$field] : null;
+            return isset($this->fields[$field]) ? $this->fields[$field] : null;
         }
         elseif($methodType == self::SETTER){
-            $this->allowedFields[$field] = $arguments[0];
+            $this->fields[$field] = $arguments[0];
             return $this;
         }
     }
