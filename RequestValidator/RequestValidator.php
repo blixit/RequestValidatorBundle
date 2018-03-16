@@ -100,7 +100,7 @@ class RequestValidator
         $constraints    = $constraintClass->getConfiguration($configuration, $type);
         $allowedFields = array_keys($constraints->fields);
 
-        return new ValidatedRequest($allowedFields, $fields);
+        return new ValidatedRequest($this->request, $allowedFields, $fields);
     }
 
 

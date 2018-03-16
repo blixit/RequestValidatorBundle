@@ -14,11 +14,24 @@ class ValidatedRequest
     const GETTER = 'g';
     const SETTER = 's';
 
+    /**
+     * array allowedFields
+     */
     private $allowedFields = [];
+
+    /**
+     * array $fields
+     */
     private $fields = [];
 
-    function __construct(array $allowedFields, array $fields)
+    /**
+     * Request $request
+     */
+    private $request;
+
+    function __construct(Request $request, array $allowedFields, array $fields)
     {
+        $this->request = $request;
         $this->allowedFields = $allowedFields;
         $this->fields = $fields;
     }
@@ -50,6 +63,13 @@ class ValidatedRequest
             $this->fields[$field] = $arguments[0];
             return $this;
         }
+    }
+
+    /**
+     * Return the request object used during the validation
+     */
+    public function getRequest(){
+        return $this->request;
     }
 
 
