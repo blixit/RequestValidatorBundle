@@ -45,7 +45,7 @@ class RequestValidator
 
     }
 
-    private function validate(string $configuration, string $constraintClassName, array $fields, string $type = RequestValidatorConstraints::ANY){
+    public function validate(string $configuration, string $constraintClassName, array $fields, string $type = RequestValidatorConstraints::ANY){
 
         $constraintClass= (new \ReflectionClass($constraintClassName))->newInstance();
         $constraints    = $constraintClass->getConfiguration($configuration,$type);
