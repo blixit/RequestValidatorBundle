@@ -23,7 +23,7 @@ class ValidationException extends \Exception
      */
     function __construct(array $errors = [], int $code = self::BAD_REQUEST, \Throwable $previous = NULL){
 
-        $message = join(',', $errors);
+        $message = current(array_keys($errors)) . ": " . join(',', current($errors));
 
         parent::__construct( $message, $code, $previous);
         $this->errors = $errors;
