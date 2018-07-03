@@ -54,9 +54,12 @@ class RequestValidator
 
         $errors         = [];
         foreach ($violationList as $violation){
+            if (empty($errors)){
+                $errors[$configuration.'_'.$type] = [];
+            }
             $field = preg_replace('/\[|\]/', "", $violation->getPropertyPath());
             $error = $violation->getMessage();
-            $errors[$configuration.'_'.$type.'_'.$field] = $error;
+            $errors[$configuration.'_'.$type][$field] = $error;
         }
 
         if( ! empty($errors) ){
